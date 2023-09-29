@@ -1,17 +1,14 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('superimages', {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('heroes_to_users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
-      },
-      imagePath: {
-        type: Sequelize.TEXT,
-        field: 'image_path'
       },
       superheroId: {
         field: 'superhero_id',
@@ -24,19 +21,31 @@ module.exports = {
           }
         }
       },
-      createdAt: {
+      userId: {
+        field: 'user_id',
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.DATE,
-        field: 'created_at'
+        references: {
+          model: {
+            tableName: 'users',
+            key: 'id'
+          }
+        }
+      },
+      createdAt: {
+        field: 'created_at',
+        allowNull: false,
+        type: Sequelize.DATE
       },
       updatedAt: {
+        field: 'updated_at',
         allowNull: false,
-        type: Sequelize.DATE,
-        field: 'updated_at'
+        type: Sequelize.DATE
       }
-    });
+    })
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('superimages');
+
+  async down (queryInterface, Sequelize) {
+      await queryInterface.dropTable('heroes_to_users');
   }
 };

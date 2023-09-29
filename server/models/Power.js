@@ -10,7 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Power.belongsToMany(models.Superhero, {
+        through: 'powers_to_heroes',
+        foreignKey: 'powerId'
+      })
     }
   }
   Power.init({
