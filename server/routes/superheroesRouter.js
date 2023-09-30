@@ -1,5 +1,6 @@
 const { Router } = require('express');
-const SuperheroesController = require('../controllers/superheroes.controller')
+const SuperheroesController = require('../controllers/superheroes.controller');
+const checkRole = require('../middlewares/checkRole.mw');
 
 const path = require('path');
 const multer = require('multer');
@@ -17,7 +18,7 @@ const upload = multer({ storage });
 
 const superheroesRouter = Router();
 
-superheroesRouter.post('/', upload.single('superAvatar'), SuperheroesController.createSuperhero)
+superheroesRouter.post('/', checkRole('admin'), upload.single('superAvatar'), SuperheroesController.createSuperhero)
 superheroesRouter.get('/', SuperheroesController.getAllSuperheroes)
 
 module.exports = superheroesRouter;

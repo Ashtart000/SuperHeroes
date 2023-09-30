@@ -1,6 +1,10 @@
 const { Superhero, Film, Power, Superimage } = require('../models/index');
 
-const powersToAdd = [{name: 'Agility'}, {name: 'Strength'}, {name: 'Speed'}, {name: 'Lasso of Truth'}]
+const powersToAdd = [{name: 'Agility'}, {name: 'Strength'}, {name: 'Speed'}, 
+{name: 'Durability'}, {name: 'Flight'}, {name: 'Heat vision'}, {name: 'Ice breath'}, 
+{name: 'X-ray vision'}]
+
+const filmsToAdd = [{}]
 
 module.exports.createSuperhero = async (req, res, next) => {
     try {
@@ -11,7 +15,7 @@ module.exports.createSuperhero = async (req, res, next) => {
 
         const heroWithPowers = await createdHero.addPowers(powers);
 
-        return res.status(201).send(heroWithPowers);
+        return res.status(201).send({createdHero, heroWithPowers});
     } catch (error) {
         next(error)
     }
@@ -26,6 +30,9 @@ module.exports.getAllSuperheroes = async (req, res, next) => {
                 },
                 {
                     model: Superimage
+                },
+                {
+                    model: Film
                 }
             ]
         });
