@@ -11,7 +11,8 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       year: {
         type: Sequelize.INTEGER
@@ -26,7 +27,7 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      producer: {
+      director: {
         type: Sequelize.STRING
       },
       createdAt: {

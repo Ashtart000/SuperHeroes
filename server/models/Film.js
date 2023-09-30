@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   Film.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     year: {
       type: DataTypes.INTEGER,
@@ -41,11 +42,12 @@ module.exports = (sequelize, DataTypes) => {
       field: 'image_path'
     },
     description: DataTypes.TEXT,
-    producer: DataTypes.STRING
+    director: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Film',
-    tableName: 'films'
+    tableName: 'films',
+    underscored: true
   });
   return Film;
 };

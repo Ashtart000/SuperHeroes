@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Superimage',
-    tableName: 'superimages'
+    tableName: 'superimages',
+    underscored: true
   });
   return Superimage;
 };
