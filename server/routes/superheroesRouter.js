@@ -18,7 +18,9 @@ const upload = multer({ storage });
 
 const superheroesRouter = Router();
 
-superheroesRouter.post('/', checkRole('admin'), upload.single('superAvatar'), SuperheroesController.createSuperhero)
-superheroesRouter.get('/', SuperheroesController.getAllSuperheroes)
+superheroesRouter.post('/', checkRole('admin'), upload.single('superAvatar'), SuperheroesController.createSuperhero);
+superheroesRouter.post('/images/:heroId', upload.array('images'), SuperheroesController.addImagesToHero);
+superheroesRouter.get('/', SuperheroesController.getAllSuperheroes);
+superheroesRouter.get('/today', SuperheroesController.getOneHeroRandom);
 
 module.exports = superheroesRouter;

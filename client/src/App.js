@@ -1,15 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SuperHeroes from "./pages/SuperHeroes";
-import { SUPERHEROES_ROUTE } from "./utils/consts";
 import AppRouter from "./components/AppRouter";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <BrowserRouter>
-     {/* <Routes>
-        <Route path={SUPERHEROES_ROUTE} element={<SuperHeroes />}/>
-     </Routes> */}
-     <AppRouter />
+      <NavBar />
+      <AppRouter />
     </BrowserRouter>
   );
 }

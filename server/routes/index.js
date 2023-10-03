@@ -3,6 +3,8 @@ const filmsRouter = require('./filmsRouter');
 const superheroesRouter = require('./superheroesRouter');
 const powersRouter = require('./powersRouter');
 const usersRouter = require('./usersRouter');
+const imagesRouter = require('./imagesRouter')
+const predictionsRouter = require('./predictionsRouter');
 
 const router = Router();
 
@@ -10,5 +12,7 @@ router.use('/films', filmsRouter);
 router.use('/superheroes', superheroesRouter);
 router.use('/powers', powersRouter);
 router.use('/users', usersRouter);
+router.use('/predictions', predictionsRouter);
+router.use('/images', imagesRouter);
 
 module.exports = router;

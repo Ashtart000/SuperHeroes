@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+
+.navbar {
+  background-color: #333;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-image {
+    width: 150px;
+    margin: 10px 40px;
+}
+
+.navbar-list {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.navbar-item {
+  margin: 0 15px;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: white;
+}
+
+button {
+  background-color: rgb(0, 68, 68);
+  font-family: inherit;
+  font-size: 1em;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.login-button {
+  margin-right: 40px;
+}
+
+button:hover {
+  background-color: teal;
+}
+
+.main-slider {
+  width: 400px;
+}
+
+.slider-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.main-slider-img {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.today-button {
+  margin-top:  40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.card-wrapper {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hero-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.catch-phrase {
+  color: rgb(0, 68, 68);
+}
+
+.real-name {
+  background-color: #333;
+  color: white;
+  width: 100%;
+}
+
+.ul-powers {
+  width: 250px;
+  height: 100px;
+  overflow-y: auto;
+}
+
+.ul-powers li:nth-child(even) {
+  color: #575555;
+}
+
+.card-slider-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.card-slider {
+  width: 380px;
+}
+
+.card-slider-img {
+  width: 380px;
+  height: 200px;
+  object-fit: cover;
+}

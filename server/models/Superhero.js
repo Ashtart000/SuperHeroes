@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
       Superhero.hasMany(models.Superimage, {
         foreignKey: 'superheroId'
       });
+      Superhero.hasMany(models.Prediction, {
+        foreignKey: 'superheroId'
+      });
       Superhero.belongsToMany(models.Power, {
         through: 'powers_to_heroes',
         foreignKey: 'superheroId'
