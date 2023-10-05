@@ -3,7 +3,7 @@ import React from 'react';
 const NoMatch = () => {
     return (
         <div>
-            404 NOT FOUND
+            Sorry... page not found or intended for admin
         </div>
     );
 }

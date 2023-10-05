@@ -2,10 +2,13 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {useNavigate} from 'react-router-dom';
+import { SUPERHEROES_ROUTE } from '../utils/consts';
 
 const SuperHeroCard = (props) => {
     const {id, nickname, realName, description, imagePath, catchPhrase, Powers, Superimages} = props.hero;
-    console.log(props);
+
+    const navigate = useNavigate();
 
     const slickSettings = {
         dots: true,
@@ -14,13 +17,16 @@ const SuperHeroCard = (props) => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 1000,
+        autoplaySpeed: 2000,
         arrows: false
     };
 
     return (
         <>
-        <article className='card-wrapper' onClick={props.onClick}>
+        <article className='card-wrapper' 
+            onClick={() => navigate(SUPERHEROES_ROUTE + '/' + id)}
+        >
+
             <h1>{nickname}</h1>
             <img src={`http://localhost:5000/${imagePath}`} alt={nickname} className='hero-avatar'/>
             <h3 className='catch-phrase'>{catchPhrase}</h3>

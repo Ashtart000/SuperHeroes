@@ -7,7 +7,6 @@
     font-family: 'Ubuntu', sans-serif;
 }
 
-
 .navbar {
   background-color: #333;
   color: white;
@@ -49,10 +48,44 @@ button {
 
 .login-button {
   margin-right: 40px;
+  border: 1px solid white;
 }
 
 button:hover {
   background-color: teal;
+}
+
+.auth-wrapper {
+  width: 500px;
+  margin: 40px auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.auth-field {
+  padding: 10px;
+}
+
+.auth-button {
+  width: 100px;
+}
+
+.auth-button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .main-slider {
@@ -93,9 +126,10 @@ button:hover {
   align-items: center;
   text-align: center;
   gap: 10px;
-  padding: 20px;
-  margin-top: 20px;
+  padding: 15px;
+  margin-top: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .hero-avatar {
@@ -140,4 +174,19 @@ button:hover {
   width: 380px;
   height: 200px;
   object-fit: cover;
+}
+
+.add-hero-wrapper {
+  display: flex;
+}
+
+.add-hero-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.add-hero-form input {
+  padding: 5px;
 }

@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CreateHeroModal from './AdminPage/CreateHeroModal';
 
 const Admin = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalAddHeroOpen, setIsModalAddHeroOpen] = useState(false);
+
     return (
-        <div>
-            Admin
-        </div>
+        <>
+            <button onClick={() => setIsModalAddHeroOpen(true)}>CREATE SUPERHERO</button>
+
+            <CreateHeroModal 
+            isModalOpen={isModalAddHeroOpen}
+            setIsModalOpen={setIsModalAddHeroOpen}
+            />
+        </>
     );
 }
 

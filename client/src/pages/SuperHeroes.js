@@ -6,8 +6,8 @@ const SuperHeroes = () => {
     const [heroes, setHeroes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedHero, setSelectedHero] = useState(null);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [selectedHero, setSelectedHero] = useState(null);
 
     const loadHeroes = () => {
         getAllHeroes()
@@ -30,13 +30,8 @@ const SuperHeroes = () => {
         return heroes.map((hero) => <SuperHeroCard
         hero={hero} 
         key={hero.id}
-        onClick={() => { // це не обробник, це пропс
-            setSelectedHero(hero)
-            setIsModalOpen(true)
-        }}
         />)
     }
-
 
     return (
         <div className='card-container'>
