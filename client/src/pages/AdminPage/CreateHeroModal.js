@@ -22,6 +22,23 @@ const initialState = {
 
 const CreateHeroModal = (props) => {
     const [heroPowers, addHeroPowers] = useState([]);
+    const [newPowers, setNewPowers] = useState([]); 
+    const [onePower, setOnePower] = useState(''); 
+
+    const handleAddPower = (event) => {
+        event.preventDefault();
+        if (onePower.trim() !== '') {
+            setNewPowers([...newPowers, onePower]); 
+         setOnePower(''); // Очищує поле вводу
+        }
+    };
+
+    const handleDeletePower = (event, index) => {
+        event.preventDefault();
+        const updatedPowers = [...newPowers];
+        updatedPowers.splice(index, 1); // Видаляємо елемент за індексом
+        setNewPowers(updatedPowers); 
+    }
 
     const getPowers = async () => {
         const allPowers = await getAllPowers();
@@ -64,22 +81,32 @@ const CreateHeroModal = (props) => {
                                         setFieldValue("superAvatar", files)
                                     }}
                                 />
-                                {/* <button type='submit'>Add Superhero</button> */}
-                            </Form>
-
-                            <Form className='add-hero-form'>
-                            <Field as="select"
+                                <p>Choose a superpower (or multiple using CTRL)</p>
+                                <Field as="select"
                                     name="powers"
-                                    multiple 
-                            >
+                                    multiple>
                                 {heroPowers.map((power, index) => (
                                 <option key={index} value={power.name}>
                                 {power.name}
                                 </option>
                                 ))}
-                            </Field>
-                            <Field placeholder='Or add new superpower' name='newPower'/>    
-                                <button type='submit'>Add Superhero</button>
+                                </Field>
+
+                            <input
+                                placeholder='Or add new superpower'
+                                value={onePower}
+                                onChange={(e) => setOnePower(e.target.value)} 
+                            />
+                            <button onClick={handleAddPower}>Add Power</button>
+                            <p>New superpower to add</p>
+                            <ul>
+                                {newPowers.map((power, index) => (
+                                    <li key={index}>{power} <button onClick={handleDeletePower}>Delete</button></li>
+                                ))}
+                            </ul>
+                            
+
+                            <button type='submit'>Add Superhero</button>
                             </Form>
                             </>
                         )
