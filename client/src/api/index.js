@@ -64,5 +64,11 @@ export const createHero = async (formData) => {
         body: formData
     })
 
+    if(response.status === 400) {
+        const error = await response.json();
+        console.log(error);
+        return Promise.reject(error);
+    }
+
     return response.json();
 }

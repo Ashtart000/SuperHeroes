@@ -8,7 +8,7 @@ Modal.setAppElement('#root');
 
 const customStyles = {
     content: {
-      top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)',},
+      top: '50%', left: '50%', right: 'auto', bottom: 'auto', marginRight: '-50%', transform: 'translate(-50%, -50%)', padding: '0', textAlign: 'center'},
   };
 
 const fileTypes = ["JPEG", "PNG", "JPG"];
@@ -23,6 +23,7 @@ const initialState = {
 };
 
 const CreateHeroModal = (props) => {
+    const [error, setError] = useState(null);
     const [heroPowers, addHeroPowers] = useState([]);
     const [newPowers, setNewPowers] = useState([]); 
     const [onePower, setOnePower] = useState(''); 
@@ -37,6 +38,7 @@ const CreateHeroModal = (props) => {
     const getPowers = async () => {
         const allPowers = await getAllPowers();
         addHeroPowers(allPowers);
+        console.log(allPowers)
     }
 
     useEffect(() => {
@@ -48,6 +50,7 @@ const CreateHeroModal = (props) => {
         if (onePower.trim() !== '') {
             setNewPowers([...newPowers, onePower]); 
          setOnePower(''); 
+         console.log(onePower)
         }
     };
 
@@ -102,12 +105,20 @@ const CreateHeroModal = (props) => {
             console.log(serverResponse);
             // props.setIsModalOpen(false);
             // await props.loadGroups(props.page);
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            setError(err);
         } finally {
             setSubmitting(false);
         }
     }
+
+    const clearFormHandler = (resetForm) => {
+        resetForm(); 
+        setNewPowers([]);
+        setPredictions([]); 
+        setImage(null); 
+        setError(null);
+    };
 
     return (
         <Modal
@@ -119,7 +130,7 @@ const CreateHeroModal = (props) => {
         <Formik 
             initialValues={initialState} 
             onSubmit={handleSubmitToFormik}>
-                {({isSubmitting, setFieldValue}) => {
+                {({isSubmitting, setFieldValue, resetForm}) => {
                     return (
                         <>
                         <Form className='add-hero-form'>
@@ -139,11 +150,13 @@ const CreateHeroModal = (props) => {
                             }}
                         />
                             </div>
+
                             <div className='add-hero-powers'>
                         <p>Choose a superpower (or multiple using CTRL)</p>
                         <Field as="select"
                             name="powers"
-                            multiple>
+                            multiple
+                            className='add-hero-powers-select'>
                         {heroPowers.map((power, index) => (
                         <option key={index} value={power.name}>
                         {power.name}
@@ -157,8 +170,8 @@ const CreateHeroModal = (props) => {
                             onChange={(e) => setOnePower(e.target.value)} 
                         />
                         <button onClick={handleAddPower}>Add Power</button>
-                        <p>New superpower to add</p>
-                        <ul>
+                        <p>New superpower to add:</p>
+                        <ul className='add-hero-ul'>
                             {newPowers.map((power, index) => (
                                 <li key={index}>{power} <button onClick={handleDeletePower}>Delete</button></li>
                             ))}
@@ -171,8 +184,8 @@ const CreateHeroModal = (props) => {
                             onChange={(e) => setOnePrediction(e.target.value)} 
                         />
                         <button onClick={handleAddPrediction}>Add Prediction</button>
-                        <p>Super prediction to add</p>
-                        <ul>
+                        <p>Super prediction to add:</p>
+                        <ul className='add-hero-ul'>
                             {predictions.map((prediction, index) => (
                                 <li key={index}>{prediction} <button onClick={handleDeletePrediction}>Delete</button></li>
                             ))}
@@ -188,7 +201,7 @@ const CreateHeroModal = (props) => {
                         {image && Object.values(image).length > 0 ? (
                             <div>
                                 <p>Files uploaded:</p>
-                                <ul>
+                                <ul className='add-hero-ul'>
                                     {Object.values(image).map((file, index) => (
                                         <li key={index}>{file.name}</li>
                                     ))}
@@ -197,8 +210,14 @@ const CreateHeroModal = (props) => {
                         ) : (
                             <p>No files uploaded yet</p>
                         )}
-                            </div>                      
+                            </div> 
 
+                        {error && (
+                            <div className="error-wrapper">
+                                Error: {error.error}
+                            </div>
+                        )}
+                        <button type='reset' onClick={() => clearFormHandler(resetForm)}>Clear Form</button>
                         <button type='submit'>Add Superhero</button>
                         </Form>
                         </>
@@ -206,7 +225,7 @@ const CreateHeroModal = (props) => {
                 }}
             </Formik>
             </article>
-            <button onClick={() => props.setIsModalOpen(false)}>Cancel</button>
+            <button onClick={() => props.setIsModalOpen(false)} className='modal-close-btn'>Close</button>
         </Modal>
         
     );

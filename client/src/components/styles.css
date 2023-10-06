@@ -177,7 +177,8 @@ button:hover {
 }
 
 .add-hero-wrapper {
-  
+  background-color: #333;
+  padding: 10px;
 }
 
 .add-hero-form {
@@ -187,18 +188,70 @@ button:hover {
   grid-gap: 10px; 
 }
 
+.add-hero-form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  max-width: 500px;
+  max-height: 275px;
+  overflow-y: auto;
+  text-align: start;
+}
+
 .add-hero-main-info {
-  
+  background-color: rgb(252, 252, 139);
 }
 
 .add-hero-powers {
-  
+  background-color: rgb(148, 252, 139);
+}
+
+.add-hero-powers-select {
+  min-height: 85px;
+  overflow-y: auto;
 }
 
 .add-hero-predictions {
-  
+  background-color: rgb(139, 239, 252);
+}
+
+.add-hero-more-images {
+  background-color: rgb(211, 139, 252);
+}
+
+.add-hero-ul {
+
+}
+
+.add-hero-ul button {
+  min-width: 80px;
+  padding: 2px;
+  margin-left: 10px;
+}
+
+.add-hero-ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  word-break: break-all;
+  font-size: 0.8em;
+  margin-bottom: 5px;
+}
+.add-hero-ul li:nth-child(even) {
+  color: #575555;
 }
 
 .add-hero-form input {
   padding: 5px;
+}
+
+.error-wrapper {
+  background-color: red;
+  color: whitesmoke;
+  width: 300px;
+}
+
+.modal-close-btn {
+  margin: 5px 0;
 }

@@ -1,3 +1,4 @@
+const InvalidDataError = require('../errors/InvalidDataError');
 const { Sequelize, Superhero, Film, Power, Superimage, Prediction } = require('../models/index');
 
 const powersToAdd = [{name: 'Intellect'}, {name: 'Detective skills'}, {name: 'Martial arts'}]
@@ -39,18 +40,31 @@ module.exports.createSuperhero = async (req, res, next) => {
     try {
         console.log(req.body.newPower)
         const { body, files: {filename} } = req;
+
+        const existingHero = await Superhero.findOne({
+            where: {
+                nickname: body.nickname
+            }
+        })
+        if(existingHero) {
+            throw new InvalidDataError('Superhero with such name already exists');
+        }
+
         const createdHero = await Superhero.create({...body, imagePath: filename});
 
-        const newPowersToAdd = body.newPower.map(power => {
-            return { name: power }
-        })
-
-        if(newPowersToAdd.length > 0) {
+        if(Array.isArray(body.newPower)) {
+            const newPowersToAdd = body.newPower.map(power => {
+                return { name: power }
+            })
             console.log(newPowersToAdd)
             const newPowers = await Power.bulkCreate(newPowersToAdd);
             return newPowers;
         }
-
+        if(typeof body.newPower === 'string') {
+            const oneNewPower = await Power.create({name: body.newPower});
+            return oneNewPower;
+        }
+        
         const existPower = await Power.findAll({
             where: {
                 name: body.powers.split(',')
