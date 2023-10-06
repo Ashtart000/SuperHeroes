@@ -177,14 +177,26 @@ button:hover {
 }
 
 .add-hero-wrapper {
-  display: flex;
+  
 }
 
 .add-hero-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 10px; 
+}
+
+.add-hero-main-info {
+  
+}
+
+.add-hero-powers {
+  
+}
+
+.add-hero-predictions {
+  
 }
 
 .add-hero-form input {

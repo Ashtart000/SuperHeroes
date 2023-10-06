@@ -57,3 +57,12 @@ export const loginUser = async (data) => {
 
     return response.json();
 }
+
+export const createHero = async (formData) => {
+    const response = await fetch ('http://localhost:5000/api/superheroes', {
+        method: 'POST',
+        body: formData
+    })
+
+    return response.json();
+}

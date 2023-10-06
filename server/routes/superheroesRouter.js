@@ -18,7 +18,8 @@ const upload = multer({ storage });
 
 const superheroesRouter = Router();
 
-superheroesRouter.post('/', checkRole('admin'), upload.single('superAvatar'), SuperheroesController.createSuperhero);
+// superheroesRouter.post('/', checkRole('admin'), upload.single('superAvatar'), upload.array('images'), SuperheroesController.createSuperhero);
+superheroesRouter.post('/', upload.fields([{name: 'superAvatar', maxCount: 1}, {name: 'images', maxCount: 10}]), SuperheroesController.createSuperhero);
 superheroesRouter.post('/images/:heroId', upload.array('images'), SuperheroesController.addImagesToHero);
 superheroesRouter.get('/', SuperheroesController.getAllSuperheroes);
 superheroesRouter.get('/today', SuperheroesController.getOneHeroRandom);
