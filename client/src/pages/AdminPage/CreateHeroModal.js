@@ -38,7 +38,6 @@ const CreateHeroModal = (props) => {
     const getPowers = async () => {
         const allPowers = await getAllPowers();
         addHeroPowers(allPowers);
-        console.log(allPowers)
     }
 
     useEffect(() => {
@@ -47,10 +46,15 @@ const CreateHeroModal = (props) => {
 
     const handleAddPower = (event) => {
         event.preventDefault();
-        if (onePower.trim() !== '') {
+        const existPower = heroPowers.some(power => power.name.trim().toLowerCase() === onePower.trim().toLowerCase());
+        if(existPower) {          
+            setError(`${onePower} is already exists in Power List`);
+            setOnePower(''); 
+        }
+        else {
             setNewPowers([...newPowers, onePower]); 
-         setOnePower(''); 
-         console.log(onePower)
+            setOnePower(''); 
+            setError(null);
         }
     };
 
@@ -103,6 +107,11 @@ const CreateHeroModal = (props) => {
         try {
             const serverResponse = await createHero(formData);
             console.log(serverResponse);
+
+            if(serverResponse) {
+                actions.resetForm();
+                setError(null);
+            }
             // props.setIsModalOpen(false);
             // await props.loadGroups(props.page);
         } catch (err) {
@@ -214,7 +223,7 @@ const CreateHeroModal = (props) => {
 
                         {error && (
                             <div className="error-wrapper">
-                                Error: {error.error}
+                                Error: {error.error || error}
                             </div>
                         )}
                         <button type='reset' onClick={() => clearFormHandler(resetForm)}>Clear Form</button>

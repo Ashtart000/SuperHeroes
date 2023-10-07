@@ -208,7 +208,7 @@ button:hover {
 }
 
 .add-hero-powers-select {
-  min-height: 85px;
+  min-height: 95px;
   overflow-y: auto;
 }
 
@@ -249,7 +249,7 @@ button:hover {
 .error-wrapper {
   background-color: red;
   color: whitesmoke;
-  width: 300px;
+  grid-row: span 2;
 }
 
 .modal-close-btn {

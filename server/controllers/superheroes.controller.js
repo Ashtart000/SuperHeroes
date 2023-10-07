@@ -1,81 +1,79 @@
 const InvalidDataError = require('../errors/InvalidDataError');
 const { Sequelize, Superhero, Film, Power, Superimage, Prediction } = require('../models/index');
 
-const powersToAdd = [{name: 'Intellect'}, {name: 'Detective skills'}, {name: 'Martial arts'}]
-
-const filmsToAdd = [{}]
-
-// module.exports.createSuperhero = async (req, res, next) => {
-//     try {
-//         const { body, file: {filename}} = req;
-//         const createdHero = await Superhero.create({...body, imagePath: filename});
-        
-//         const powers = await Power.bulkCreate(powersToAdd);
-//         const heroPowers = await createdHero.addPowers(powers);
-        
-//         const predictionsToAdd = [
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''},
-//             {superheroId: createdHero.id, description: ''}
-//         ]
-
-//         const predictions = await Prediction.bulkCreate(predictionsToAdd);
-
-//         // const heroPredictions = await createdHero.addPredictions(predictions);
-
-//         return res.status(201).send({createdHero, heroPowers, predictions});
-//     } catch (error) {
-//         next(error)
-//     }
-// }
-
 module.exports.createSuperhero = async (req, res, next) => {
     try {
-        console.log(req.body.newPower)
-        const { body, files: {filename} } = req;
+        const { body, files } = req;
 
         const existingHero = await Superhero.findOne({
             where: {
                 nickname: body.nickname
             }
         })
+
         if(existingHero) {
             throw new InvalidDataError('Superhero with such name already exists');
         }
 
-        const createdHero = await Superhero.create({...body, imagePath: filename});
+        const imagePath = files.superAvatar ? files.superAvatar[0].filename : null;
+
+        const createdHero = await Superhero.create({...body, imagePath});
+
+        let allPowers = []
 
         if(Array.isArray(body.newPower)) {
+            console.log(body.newPower)
             const newPowersToAdd = body.newPower.map(power => {
                 return { name: power }
             })
-            console.log(newPowersToAdd)
             const newPowers = await Power.bulkCreate(newPowersToAdd);
-            return newPowers;
+            allPowers = [...body.newPower]
         }
+
         if(typeof body.newPower === 'string') {
             const oneNewPower = await Power.create({name: body.newPower});
-            return oneNewPower;
+            allPowers.push(body.newPower)
         }
-        
-        const existPower = await Power.findAll({
-            where: {
-                name: body.powers.split(',')
-            }
-        })
-        if(existPower.length > 0) {
+
+        if(Array.isArray(body.powers)) {
+            const powers = body.powers.split(',');
+            allPowers = allPowers.concat(powers);
+        }
+
+        if(typeof body.powers === 'string') {
+            const powers = body.powers.split(',');
+            allPowers.push(...powers);
+        }
+
+        allPowers = allPowers.filter(power => power.trim() !== '');
+
+        if(allPowers.length > 0) {
+            const existPower = await Power.findAll({
+                where: {
+                    name: allPowers
+                }
+            });
             const powerToHero = await createdHero.addPowers(existPower);
-            return powerToHero;
+        }
+
+        if(files.images) {
+            const filenames = files.images.map(image => image.filename);
+            const imagesToAdd = filenames.map(filename => ({ superheroId: createdHero.id, imagePath: filename }));
+            console.log(imagesToAdd);
+            const heroImages = await Superimage.bulkCreate(imagesToAdd);
+        }
+   
+        if(Array.isArray(body.prediction)) {
+            console.log('hello from prediction')
+            const predictionToAdd = body.prediction.map(prediction => ({superheroId: createdHero.id, description: prediction}))
+            const heroPredictions = Prediction.bulkCreate(predictionToAdd)
+        }
+
+        if(typeof body.prediction === 'string') {
+            const heroOnePrediction = Prediction.create({superheroId: createdHero.id, description: body.prediction})
         }
         
-        return res.status(201).send({data: {createdHero, existPower, powerToHero, newPowers}})
+        return res.status(201).send({data: createdHero})
 
     } catch (error) {
         next(error)
