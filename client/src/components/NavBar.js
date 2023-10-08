@@ -5,10 +5,20 @@ import logoImg from '../img/logo/logo.png'
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
 import {observer} from "mobx-react-lite";
+import jwt_decode from "jwt-decode";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);
     const navigate = useNavigate();
+
+    // const role = jwt_decode(localStorage.getItem('token'));
+    // console.log(role.role)
+
+    const logOut = () => {
+      user.setUser({})
+      user.setIsAuth(false)
+      localStorage.removeItem('token')
+    }
 
     return (
       <>
@@ -31,12 +41,12 @@ const NavBar = observer(() => {
         ? 
           <>
             <button onClick={() => navigate(ADMIN_ROUTE)} className="login-button">Admin super panel</button>
-            <button onClick={() => navigate(LOGIN_ROUTE)} className="login-button">Log out</button>
+            <button onClick={logOut} className="login-button">Log out</button>
           </>
         :
           <>
             <button className="login-button" 
-              onClick={() => user.setIsAuth(true)}>Log in / Register</button>
+              onClick={() => navigate(LOGIN_ROUTE)}>Log in / Register</button>
           </>
         }
       </nav>

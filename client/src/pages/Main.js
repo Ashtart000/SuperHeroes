@@ -3,8 +3,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import MainRandomModal from './MainRandomModal';
-import { getOneHeroRandom } from '../api';
-import { getAllImages } from '../api';
+import { getOneHeroRandom } from '../api/heroApi';
+import { getAllImages } from '../api/heroApi';
 
 const Main = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);

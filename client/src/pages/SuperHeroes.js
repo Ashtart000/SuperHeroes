@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { getAllHeroes } from '../api';
+import { getAllHeroes } from '../api/heroApi';
 import SuperHeroCard from './SuperHeroCard';
 
 const SuperHeroes = () => {

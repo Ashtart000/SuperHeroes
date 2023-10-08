@@ -43,7 +43,6 @@ module.exports.login = async (req, res, next) => {
 }
 
 module.exports.check = (req, res, next) => {
-    res.json('Все работает')
     const { user } = req;
     const token = createToken(user.id, user.name, user.email, user.role);
     return res.json({token});

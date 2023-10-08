@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import {Formik, Form, Field, ErrorMessage } from 'formik';
-import { createHero, getAllPowers } from '../../api';
+import { createHero, getAllPowers } from '../../api/heroApi';
 import { FileUploader } from "react-drag-drop-files";
 
 Modal.setAppElement('#root');

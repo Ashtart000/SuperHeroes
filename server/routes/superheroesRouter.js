@@ -23,5 +23,6 @@ superheroesRouter.post('/', upload.fields([{name: 'superAvatar', maxCount: 1}, {
 superheroesRouter.post('/images/:heroId', upload.array('images'), SuperheroesController.addImagesToHero);
 superheroesRouter.get('/', SuperheroesController.getAllSuperheroes);
 superheroesRouter.get('/today', SuperheroesController.getOneHeroRandom);
+superheroesRouter.delete('/:heroId', SuperheroesController.deleteHero);
 
 module.exports = superheroesRouter;

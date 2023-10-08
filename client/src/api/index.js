@@ -1,74 +1,21 @@
-export const getAllHeroes = async () => {
-    const url = 'http://localhost:5000/api/superheroes/';
+import axios from "axios";
 
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.log(error)
-    }
+const $host = axios.create({
+    baseURL: process.env.REACT_APP_API_URL
+})
+
+const $authHost = axios.create({
+    baseURL: process.env.REACT_APP_API_URL
+})
+
+const authInterceptor = config => {
+    config.headers.authorization = `Bearer ${localStorage.getItem('token')}`
+    return config
 }
 
-export const getOneHeroRandom = async () => {
-    const url = 'http://localhost:5000/api/superheroes/today';
+$authHost.interceptors.request.use(authInterceptor)
 
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
-
-export const getAllImages = async () => {
-    const url = 'http://localhost:5000/api/images';
-
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
-
-export const getAllPowers = async () => {
-    const url = 'http://localhost:5000/api/powers';
-
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
-
-export const registerUser = async (data) => {
-    const response = await fetch ('http://localhost:5000/api/users/registration', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-
-    return response.json();
-}
-
-export const loginUser = async (data) => {
-    const response = await fetch ('http://localhost:5000/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-
-    return response.json();
-}
-
-export const createHero = async (formData) => {
-    const response = await fetch ('http://localhost:5000/api/superheroes', {
-        method: 'POST',
-        body: formData
-    })
-
-    if(response.status === 400) {
-        const error = await response.json();
-        console.log(error);
-        return Promise.reject(error);
-    }
-
-    return response.json();
+export {
+    $host,
+    $authHost
 }

@@ -66,11 +66,11 @@ module.exports.createSuperhero = async (req, res, next) => {
         if(Array.isArray(body.prediction)) {
             console.log('hello from prediction')
             const predictionToAdd = body.prediction.map(prediction => ({superheroId: createdHero.id, description: prediction}))
-            const heroPredictions = Prediction.bulkCreate(predictionToAdd)
+            const heroPredictions = await Prediction.bulkCreate(predictionToAdd)
         }
 
         if(typeof body.prediction === 'string') {
-            const heroOnePrediction = Prediction.create({superheroId: createdHero.id, description: body.prediction})
+            const heroOnePrediction = await Prediction.create({superheroId: createdHero.id, description: body.prediction})
         }
         
         return res.status(201).send({data: createdHero})
@@ -94,9 +94,6 @@ module.exports.getAllSuperheroes = async (req, res, next) => {
                 {
                     model: Superimage,
                     attributes: ['imagePath']
-                },
-                {
-                    model: Film
                 }
             ]
         });
@@ -136,5 +133,23 @@ module.exports.addImagesToHero = async (req, res, next) => {
 
     } catch (error) {
         next(error)
+    }
+}
+
+module.exports.deleteHero = async (req, res, next) => {
+    try {
+        const { params: {heroId} } = req;
+        const result = await Superhero.destroy({
+            where: {
+                id: heroId
+            }
+        });
+        if(result > 0) {
+            return res.status(200).json({ message: 'Succesfull delete!' });
+        } else {
+            return res.status(404).json({ message: 'Such hero does not exist!' });
+        }  
+    } catch (error) {
+        
     }
 }

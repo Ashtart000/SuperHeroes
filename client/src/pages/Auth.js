@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {Formik, Form, Field} from 'formik';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
-import { loginUser, registerUser } from '../api';
+import { loginUser, registerUser } from '../api/userApi';
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
-const Auth = () => {
+const Auth = observer ( () => {
+    const {user} = useContext(Context);
     const navigate = useNavigate();
     const location = useLocation();
     const isLogin = location.pathname === LOGIN_ROUTE;
-
 
     const initialValues = {
         name: '',
@@ -17,14 +19,23 @@ const Auth = () => {
     }
 
     const authOnSubmit = async (values, actions) => {
-        if(!isLogin) {
-            const serverResponse = await registerUser(values);
-            console.log(serverResponse);
-            navigate(MAIN_ROUTE);
-        } 
-        const serverResponse = await loginUser(values);
-        console.log(serverResponse);
-        navigate(MAIN_ROUTE);
+        try {
+            let authUser;
+            if(!isLogin) {
+                authUser = await registerUser(values);
+                console.log(authUser);
+                navigate(MAIN_ROUTE);
+            } else {
+                authUser = await loginUser(values);
+                console.log(authUser)
+                navigate(MAIN_ROUTE);
+            }
+            user.setUser(user);
+            user.setIsAuth(true);
+        } catch (error) {
+            console.error(error)
+        }
+
     }
 
     return (
@@ -46,6 +57,6 @@ const Auth = () => {
             </Formik>
         </div>
     );
-}
+})
 
 export default Auth;
