@@ -11,13 +11,12 @@ const NavBar = observer(() => {
     const {user} = useContext(Context);
     const navigate = useNavigate();
 
-    // const role = jwt_decode(localStorage.getItem('token'));
-    // console.log(role.role)
-
     const logOut = () => {
       user.setUser({})
       user.setIsAuth(false)
+      user.setIsAdmin(false)
       localStorage.removeItem('token')
+      navigate(MAIN_ROUTE)
     }
 
     return (
@@ -37,10 +36,13 @@ const NavBar = observer(() => {
             <a href="/films" className="navbar-link">Films with superheroes</a>
           </li>
         </ul>
+        {user.isAdmin 
+        ? 
+        <button onClick={() => navigate(ADMIN_ROUTE)} className="login-button">Admin super panel</button>
+        : null}
         {user.isAuth 
         ? 
           <>
-            <button onClick={() => navigate(ADMIN_ROUTE)} className="login-button">Admin super panel</button>
             <button onClick={logOut} className="login-button">Log out</button>
           </>
         :

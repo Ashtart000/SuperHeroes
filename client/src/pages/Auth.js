@@ -32,6 +32,9 @@ const Auth = observer ( () => {
             }
             user.setUser(user);
             user.setIsAuth(true);
+            if(authUser.role === 'admin') {
+                user.setIsAdmin(true)
+              } 
         } catch (error) {
             console.error(error)
         }
