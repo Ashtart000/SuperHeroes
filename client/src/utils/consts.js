@@ -1,4 +1,5 @@
-export const ADMIN_ROUTE = '/admin'
+export const ADMIN_ROUTE = '/admin/'
+export const ADMIN_HEROES_ROUTE = '/admin/superheroes'
 export const LOGIN_ROUTE = '/users/login'
 export const REGISTRATION_ROUTE = '/users/registration'
 export const MAIN_ROUTE = '/'

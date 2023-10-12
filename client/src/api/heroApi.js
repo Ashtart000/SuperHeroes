@@ -1,8 +1,11 @@
 import {$authHost, $host} from "./index";
 import jwt_decode from "jwt-decode";
 
-export const getAllHeroes = async () => {
-    const url = 'http://localhost:5000/api/superheroes/';
+export const getAllHeroes = async (pageNumber) => {
+    const limit = 15;
+    const offset = limit * (pageNumber - 1);
+
+    const url = `http://localhost:5000/api/superheroes/?limit=${limit}&offset=${offset}`;
 
     try {
         const response = await fetch(url);
@@ -15,6 +18,14 @@ export const getAllHeroes = async () => {
 
 export const getOneHeroRandom = async () => {
     const url = 'http://localhost:5000/api/superheroes/today';
+
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
+export const getOneHero = async (heroId) => {
+    const url = `http://localhost:5000/api/superheroes/${heroId}`;
 
     const response = await fetch(url);
     const data = await response.json();
@@ -50,4 +61,17 @@ export const createHero = async (formData) => {
     }
 
     return response.json();
+}
+
+export const addHeroAvatar = async (image, heroId) => {
+    const url = `http://localhost:5000/api/superheroes/avatar/${heroId}`;
+
+    const requestOptions = {
+        method: 'PUT',
+        body: image
+    }
+
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    return data;
 }

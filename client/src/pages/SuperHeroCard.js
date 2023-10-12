@@ -1,56 +1,26 @@
 import React from 'react';
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import {useNavigate} from 'react-router-dom';
-import { SUPERHEROES_ROUTE } from '../utils/consts';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ADMIN_HEROES_ROUTE } from '../utils/consts';
 
 const SuperHeroCard = (props) => {
     const {id, nickname, realName, description, imagePath, catchPhrase, Powers, Superimages} = props.hero;
 
     const navigate = useNavigate();
-
-    const slickSettings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-        arrows: false
-    };
+    const location = useLocation();
+    const isAdminPage = location.pathname === ADMIN_HEROES_ROUTE;
 
     return (
         <>
-        <article className='card-wrapper' 
-            onClick={() => navigate(SUPERHEROES_ROUTE + '/' + id)}
+        <article className='one-card-wrapper' 
+            onClick={props.onClick}
         >
 
             <h1>{nickname}</h1>
             <img src={`http://localhost:5000/${imagePath}`} alt={nickname} className='hero-avatar'/>
             <h3 className='catch-phrase'>{catchPhrase}</h3>
-            <h3 className='real-name'>Real name: {realName}</h3>
-            <p>{description}</p>
-            <p>Super Powers:</p>
-            <ul className='ul-powers'>
-                {Powers.map((power, index) => (
-                    <li key={index}>{power.name}</li>
-                ))}
-            </ul>
-
-            <div className='card-slider-wrapper'>
-            <Slider {...slickSettings} className="card-slider">
-                {Superimages.map((image, index) => (
-                    <div key={index} className=''>
-                            <img src={`http://localhost:5000/${image.imagePath}`} 
-                            alt={image.imagePath} 
-                            className='card-slider-img'/>
-                    </div>
-                ))}
-            </Slider>
-        </div>
+            {isAdminPage ? <button on onClick={() => navigate(ADMIN_HEROES_ROUTE + '/' + id)}>Edit or Delete</button> : null}
         </article>
+
         </>
     );
 }

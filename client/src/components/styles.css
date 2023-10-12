@@ -96,7 +96,7 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .main-slider-img {
@@ -113,23 +113,44 @@ button:hover {
   transform: translateX(-50%);
 }
 
+.one-card-wrapper {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.one-card-wrapper button {
+  background-color: white;
+  color: #333;
+  border: 2px solid rgb(0, 68, 68);
+}
+
+.one-card-wrapper button:hover {
+  font-weight: 600;
+}
+
 .card-container {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
 .card-wrapper {
   width: 400px;
+  max-height: 97vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 10px;
-  padding: 15px;
-  margin-top: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
 }
 
 .hero-avatar {
@@ -144,6 +165,12 @@ button:hover {
 }
 
 .real-name {
+  background-color: #333;
+  color: white;
+  width: 100%;
+}
+
+.super-powers {
   background-color: #333;
   color: white;
   width: 100%;

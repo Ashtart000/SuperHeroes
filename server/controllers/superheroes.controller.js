@@ -82,7 +82,9 @@ module.exports.createSuperhero = async (req, res, next) => {
 
 module.exports.getAllSuperheroes = async (req, res, next) => {
     try {
+        const { pagination } = req;
         const allSuperheroes = await Superhero.findAll({
+            ...pagination,
             include: [
                 {
                     model: Power,
@@ -127,7 +129,7 @@ module.exports.addImagesToHero = async (req, res, next) => {
         const {params: {heroId}, files} = req;
         const images = files.map((file) => file.filename);
         const imagesToAdd = images.map(filename => ({ superheroId: heroId, imagePath: filename }));
-        console.log(imagesToAdd);
+        
         const heroImages = await Superimage.bulkCreate(imagesToAdd);
         return res.status(200).send(heroImages);
 
@@ -151,5 +153,51 @@ module.exports.deleteHero = async (req, res, next) => {
         }  
     } catch (error) {
         
+    }
+}
+
+module.exports.getOneHero = async (req, res, next) => {
+    try {
+        const { params: {heroId} } = req;
+        const oneHero = await Superhero.findByPk(heroId, {
+            include: [
+                {
+                    model: Power,
+                    attributes: ['name'],
+                    through: {
+                        attributes: []
+                    }
+                },
+                {
+                    model: Superimage,
+                    attributes: ['imagePath']
+                },
+                {
+                    model: Prediction,
+                    attributes: ['description']
+                }
+            ]
+        });
+        return res.status(200).send(oneHero); 
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.addHeroAvatar = async (req, res, next) => {
+    try {
+        const { params: {heroId}, file: {filename}} = req;
+        console.log(filename)
+        const [rowCount, [updatedHero]] = await Superhero.update({
+            imagePath: filename
+        }, {
+            where: {
+                id: heroId
+            },
+            returning: true
+        })
+        return res.send(updatedHero);
+    } catch (error) {
+        next(error)
     }
 }

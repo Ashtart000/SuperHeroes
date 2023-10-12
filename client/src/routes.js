@@ -1,16 +1,26 @@
 import Admin from "./pages/Admin"
+import AdminHeroesPage from "./pages/AdminPage/AdminHeroesPage"
+import UpdateHero from "./pages/AdminPage/UpdateHero"
 import Auth from "./pages/Auth"
 import Films from "./pages/Films"
 import Main from "./pages/Main"
 import NoMatch from "./pages/NoMatch"
 import SuperHeroPage from "./pages/SuperHeroPage"
 import SuperHeroes from "./pages/SuperHeroes"
-import { ADMIN_ROUTE, FILMS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, NO_MATCH_ROUTE, POWERS_ROUTE, REGISTRATION_ROUTE, SUPERHEROES_ROUTE } from "./utils/consts"
+import { ADMIN_HEROES_ROUTE, ADMIN_ROUTE, FILMS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, NO_MATCH_ROUTE, POWERS_ROUTE, REGISTRATION_ROUTE, SUPERHEROES_ROUTE } from "./utils/consts"
 
 export const authRoutes = [
     {
         path: ADMIN_ROUTE,
         element: <Admin />
+    },
+    {
+        path: ADMIN_HEROES_ROUTE,
+        element: <AdminHeroesPage />
+    },
+    {
+        path: ADMIN_HEROES_ROUTE + '/:id',
+        element: <UpdateHero />
     }
 ]
 

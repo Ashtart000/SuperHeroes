@@ -1,0 +1,10 @@
+.update-button-return {
+    margin-top:  10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.update-card-wrapper {
+    padding: 40px;
+}
