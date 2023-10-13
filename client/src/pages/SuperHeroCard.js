@@ -16,7 +16,7 @@ const SuperHeroCard = (props) => {
         >
 
             <h1>{nickname}</h1>
-            <img src={`http://localhost:5000/${imagePath}`} alt={nickname} className='hero-avatar'/>
+            <img src={`http://localhost:5000/${imagePath}`} alt='image' className='hero-avatar'/>
             <h3 className='catch-phrase'>{catchPhrase}</h3>
             {isAdminPage ? <button on onClick={() => navigate(ADMIN_HEROES_ROUTE + '/' + id)}>Edit or Delete</button> : null}
         </article>

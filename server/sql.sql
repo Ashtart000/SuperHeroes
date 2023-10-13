@@ -1,1 +1,1 @@
-DROP TABLE powers;
+DELETE FROM "superheroes" WHERE "id" = '43'

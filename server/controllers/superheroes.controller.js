@@ -141,6 +141,11 @@ module.exports.addImagesToHero = async (req, res, next) => {
 module.exports.deleteHero = async (req, res, next) => {
     try {
         const { params: {heroId} } = req;
+        const hero = await Superhero.findByPk(heroId);
+
+        const heroWithoutPower = await hero.setPowers(null);
+        // console.log(heroWithoutPower)
+
         const result = await Superhero.destroy({
             where: {
                 id: heroId
@@ -152,7 +157,7 @@ module.exports.deleteHero = async (req, res, next) => {
             return res.status(404).json({ message: 'Such hero does not exist!' });
         }  
     } catch (error) {
-        
+        next(error)
     }
 }
 
@@ -196,6 +201,21 @@ module.exports.addHeroAvatar = async (req, res, next) => {
             },
             returning: true
         })
+        return res.send(updatedHero);
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.updateHero = async (req, res, next) => {
+    try {
+        const { params: {heroId}, body } = req;
+        const updatedHero = await Superhero.update(body, {
+            where: {
+                id: heroId
+            }
+        })
+        console.log(updatedHero)
         return res.send(updatedHero);
     } catch (error) {
         next(error)

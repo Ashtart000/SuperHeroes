@@ -75,3 +75,32 @@ export const addHeroAvatar = async (image, heroId) => {
     const data = await response.json();
     return data;
 }
+
+export const deleteHero = async (heroId) => {
+    const url = `http://localhost:5000/api/superheroes/${heroId}`;
+    const requestOptions = {
+        method: 'DELETE',
+        body: JSON.stringify(heroId)
+    }
+
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    return data;
+}
+
+export const updateHero = async (updateData, heroId) => {
+    const url = `http://localhost:5000/api/superheroes/${heroId}`;
+    console.log(updateData)
+    const requestOptions = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updateData)
+    }
+
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    console.log(data)
+    return data;
+}
