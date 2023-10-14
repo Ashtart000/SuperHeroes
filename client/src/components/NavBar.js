@@ -5,7 +5,6 @@ import logoImg from '../img/logo/logo.png'
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from '../utils/consts';
 import {observer} from "mobx-react-lite";
-import jwt_decode from "jwt-decode";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);

@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { addToFavourite } from '../api/heroApi';
 
 Modal.setAppElement('#root');
 
@@ -24,6 +25,10 @@ const slickSettings = {
 
 const SuperHeroModal = (props) => {
     const {selectedHero} = props;
+
+    const handleAddToFavourite = async () => {
+        await addToFavourite(selectedHero.id)
+    }
     
     return (
         <Modal
@@ -33,6 +38,8 @@ const SuperHeroModal = (props) => {
             >
                 {props.selectedHero &&(
                 <article className='card-wrapper'>
+
+                <span className='favourite' onClick={handleAddToFavourite}>&#9829;</span>
 
                 <h1>{selectedHero.nickname}</h1>
                 <img src={`http://localhost:5000/${selectedHero.imagePath}`} alt={selectedHero.nickname} className='hero-avatar'/>

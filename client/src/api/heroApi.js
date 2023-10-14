@@ -104,3 +104,22 @@ export const updateHero = async (updateData, heroId) => {
     console.log(data)
     return data;
 }
+
+export const addToFavourite = async (heroId) => {
+    const user = jwt_decode(localStorage.getItem('token'));
+    const userId = user.id;
+    const url = `http://localhost:5000/api/superheroes/favourites/${heroId}/${userId}`;
+
+    const requestOptions = {
+        method: 'POST',
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // },
+        // body: JSON.stringify(updateData)
+    }
+
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    console.log(data)
+    return data;
+}

@@ -280,3 +280,10 @@ button:not(:disabled):hover {
 .modal-close-btn {
   margin: 5px 0;
 }
+
+.favourite {
+  position: absolute;
+  left: 80%;
+  font-size: 70px;
+  color: rgb(223, 39, 39);
+}

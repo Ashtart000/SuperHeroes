@@ -1,5 +1,5 @@
 const InvalidDataError = require('../errors/InvalidDataError');
-const { Sequelize, Superhero, Film, Power, Superimage, Prediction } = require('../models/index');
+const { Sequelize, Superhero, User, Power, Superimage, Prediction } = require('../models/index');
 
 module.exports.createSuperhero = async (req, res, next) => {
     try {
@@ -221,3 +221,13 @@ module.exports.updateHero = async (req, res, next) => {
         next(error)
     }
 }
+
+
+module.exports.addToFavourite = async (req, res, next) => {
+    const { params: {heroId, userId} } = req;
+    const hero = await Superhero.findByPk(heroId);
+
+    const addedToFavourite = await hero.addUser(userId)
+    return res.send(addedToFavourite);
+}
+
