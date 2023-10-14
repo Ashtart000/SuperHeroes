@@ -24,7 +24,7 @@ const initialState = {
 
 const CreateHeroModal = (props) => {
     const [error, setError] = useState(null);
-    const [heroPowers, addHeroPowers] = useState([]);
+    const [heroPowers, setHeroPowers] = useState([]);
     const [newPowers, setNewPowers] = useState([]); 
     const [onePower, setOnePower] = useState(''); 
     const [predictions, setPredictions] = useState([]);
@@ -37,7 +37,7 @@ const CreateHeroModal = (props) => {
 
     const getPowers = async () => {
         const allPowers = await getAllPowers();
-        addHeroPowers(allPowers);
+        setHeroPowers(allPowers);
     }
 
     useEffect(() => {

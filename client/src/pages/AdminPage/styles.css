@@ -9,4 +9,47 @@
     padding: 40px;
     margin: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.update-card-wrapper div {
+    padding: 10px;
+}
+
+.update-card-wrapper div:nth-child(odd) {
+    background-color: rgb(225, 225, 225);
+}
+
+.update-card-wrapper input {
+    padding: 8px;
+}
+
+.update-card-wrapper button {
+    padding: 8px;
+}
+
+.update-avatar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.update-powers-select {
+    width: 40%;
+    padding: 10px;
+}
+
+.update-error-wrapper {
+    color: red;
+}
+
+.update-hint {
+    color: #888;
+    font-size: 0.8em;
+}
+
+.update-predictions li:nth-child(odd){
+    color: #444
 }

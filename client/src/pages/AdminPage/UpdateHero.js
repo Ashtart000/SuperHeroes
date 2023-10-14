@@ -10,11 +10,6 @@ const UpdateHero = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // const showHero = async() => {
-    //     const hero = await getOneHero(id);
-    //     setHero(hero);
-    // }
-
     const showHero = () => {
         getOneHero(id)
         .then((data) => {

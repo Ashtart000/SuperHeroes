@@ -5,5 +5,7 @@ const predictionsRouter = Router();
 
 predictionsRouter.get('/', PredictionController.getAllPredictions);
 predictionsRouter.put('/:predictionId', PredictionController.updatePrediction);
+predictionsRouter.delete('/:predictionId', PredictionController.deletePrediction);
+predictionsRouter.post('/:heroId');
 
 module.exports = predictionsRouter;

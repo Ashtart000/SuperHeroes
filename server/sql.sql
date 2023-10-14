@@ -1,1 +1,1 @@
-DELETE FROM "superheroes" WHERE "id" = '43'
+DELETE FROM "predictions" WHERE "id" = '20'

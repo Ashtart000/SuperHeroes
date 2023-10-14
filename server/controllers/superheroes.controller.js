@@ -179,7 +179,7 @@ module.exports.getOneHero = async (req, res, next) => {
                 },
                 {
                     model: Prediction,
-                    attributes: ['description']
+                    attributes: ['description', 'id']
                 }
             ]
         });
