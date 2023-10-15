@@ -143,8 +143,8 @@ module.exports.deleteHero = async (req, res, next) => {
         const { params: {heroId} } = req;
         const hero = await Superhero.findByPk(heroId);
 
-        const heroWithoutPower = await hero.setPowers(null);
-        // console.log(heroWithoutPower)
+        const heroWithoutPowers = await hero.setPowers(null);
+        const heroWithoutUsers = await hero.setUsers(null);
 
         const result = await Superhero.destroy({
             where: {
@@ -224,31 +224,66 @@ module.exports.updateHero = async (req, res, next) => {
 
 
 module.exports.addToFavourite = async (req, res, next) => {
-    const { params: {heroId, userId} } = req;
-    const hero = await Superhero.findByPk(heroId);
-
-    const addedToFavourite = await hero.addUser(userId)
-    return res.send(addedToFavourite);
+    try {
+        const { params: {heroId, userId} } = req;
+        const hero = await Superhero.findByPk(heroId);
+    
+        const addedToFavourite = await hero.addUser(userId)
+        return res.send(addedToFavourite);
+    } catch (error) {
+        next(error)
+    }
 }
 
 module.exports.removeFromFavourite = async (req, res, next) => {
-    const { params: {heroId, userId} } = req;
-    const hero = await Superhero.findByPk(heroId);
-
-    const result = await hero.removeUser(userId);
-    if(result > 0) {
-        return res.status(200).json({ message: 'Succesfull delete!' });
-    } else {
-        return res.status(404).json({ message: 'Such hero does not exist!' });
-    }  
+    try {
+        const { params: {heroId, userId} } = req;
+        const hero = await Superhero.findByPk(heroId);
+    
+        const result = await hero.removeUser(userId);
+        if(result > 0) {
+            return res.status(200).json({ message: 'Succesfull delete!' });
+        } else {
+            return res.status(404).json({ message: 'Such hero does not exist!' });
+        }  
+    } catch (error) {
+        next(error)
+    }
 }
 
 module.exports.isFavouriteHero = async (req, res, next) => {
-    const { params: {heroId, userId} } = req;
-    const hero = await Superhero.findByPk(heroId);
+    try {
+        const { params: {heroId, userId} } = req;
+        const hero = await Superhero.findByPk(heroId);
+    
+        const result = await hero.hasUser(parseInt(userId));
+        console.log(result)
+        return res.send(result);
+    } catch (error) {
+        next(error)
+    }
+}
 
-    const result = await hero.hasUser(parseInt(userId));
-    console.log(result)
-    return res.send(result);
+module.exports.getAllFavouritesHeroes = async (req, res, next) => {
+    try {
+        const { params: {userId} } = req;
+        const user = await User.findByPk(userId);
+
+        const result = await user.getSuperheros({
+            include: [
+                {
+                    model: Power,  
+                    through: { attributes: [] }  
+                },
+                {
+                    model: Superimage,
+                    attributes: ['imagePath']
+                }
+            ]
+        });
+        return res.send(result);
+    } catch (error) {
+        next(error)
+    }
 }
 

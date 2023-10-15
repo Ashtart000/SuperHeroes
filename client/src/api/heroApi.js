@@ -146,3 +146,17 @@ export const isHeroFavourite = async (heroId) => {
     const data = await response.json();
     return data;
 }
+
+export const getAllFavouritesHeroes = async () => {
+    const user = jwt_decode(localStorage.getItem('token'));
+    const userId = user.id;
+    const url = `http://localhost:5000/api/superheroes/favourites/${userId}`;
+
+    const requestOptions = {
+        method: 'GET'
+    }
+
+    const response = await fetch(url, requestOptions);
+    const data = await response.json();
+    return data;
+}

@@ -32,5 +32,6 @@ superheroesRouter.post('/favourites/:heroId/:userId', SuperheroesController.addT
 superheroesRouter.delete('/favourites/:heroId/:userId', SuperheroesController.removeFromFavourite);
 superheroesRouter.post('/favourites/:heroId/:userId', SuperheroesController.addToFavourite);
 superheroesRouter.get('/favourites/:heroId/:userId', SuperheroesController.isFavouriteHero);
+superheroesRouter.get('/favourites/:userId', SuperheroesController.getAllFavouritesHeroes);
 
 module.exports = superheroesRouter;

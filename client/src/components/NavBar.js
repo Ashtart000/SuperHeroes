@@ -29,11 +29,15 @@ const NavBar = observer(() => {
             <a href="/" className="navbar-link">Home</a>
           </li>
           <li className="navbar-item">
-            <a href="/superheroes" className="navbar-link">SuperHeroes</a>
+            <a href="/superheroes" className="navbar-link"> All Superheroes</a>
           </li>
+          {user.isAuth
+          ?
           <li className="navbar-item">
-            <a href="/films" className="navbar-link">Films with superheroes</a>
+            <a href="/superheroes/favourite" className="navbar-link">Favourite Superheroes</a>
           </li>
+          : null
+          }
         </ul>
         {user.isAdmin 
         ? 

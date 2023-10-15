@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Context } from '..';
 import Modal from 'react-modal';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -24,7 +25,9 @@ const slickSettings = {
 };
 
 const SuperHeroModal = (props) => {
+    const {user} = useContext(Context);
     const {selectedHero} = props;
+    console.log(selectedHero)
 
     const [isFavourite, setIsFavourite] = useState(false);
 
@@ -62,11 +65,13 @@ const SuperHeroModal = (props) => {
                 {props.selectedHero &&(
                 <article className='card-wrapper'>
 
-                {!isFavourite ? 
-                <span className='favourite' title='Додати в обране' onClick={handleAddToFavourite}>&#9829;</span> 
-                : <span className='favourite favourite-added' title='Видалити з обраного' onClick={handleRemoveFromFavourite}>&#9829;</span> }   
-                
-
+                {user.isAuth ? 
+                    !isFavourite ? 
+                        <span className='favourite' title='Додати в обране' onClick={handleAddToFavourite}>&#9829;</span> 
+                        : <span className='favourite favourite-added' title='Видалити з обраного' onClick={handleRemoveFromFavourite}>&#9829;</span>
+                    : null 
+                }
+                   
                 <h1>{selectedHero.nickname}</h1>
                 <img src={`http://localhost:5000/${selectedHero.imagePath}`} alt={selectedHero.nickname} className='hero-avatar'/>
                 <h3 className='catch-phrase'>{selectedHero.catchPhrase}</h3>
@@ -74,20 +79,22 @@ const SuperHeroModal = (props) => {
                 <p>{selectedHero.description}</p>
                 <p className='super-powers'>Super Powers:</p>
                 <ul className='ul-powers'>
-                    {selectedHero.Powers.map((power, index) => (
+                    {selectedHero.Powers ? selectedHero.Powers.map((power, index) => (
                         <li key={index}>{power.name}</li>
-                    ))}
+                    ))
+                : null}
                 </ul>
 
                 <div className='card-slider-wrapper'>
                 <Slider {...slickSettings} className="card-slider">
-                    {selectedHero.Superimages.map((image, index) => (
+                    {selectedHero.Superimages ? selectedHero.Superimages.map((image, index) => (
                         <div key={index} className=''>
                                 <img src={`http://localhost:5000/${image.imagePath}`} 
                                 alt={image.imagePath} 
                                 className='card-slider-img'/>
                         </div>
-                    ))}
+                    ))
+                : null}
                 </Slider>
             </div>
             </article>

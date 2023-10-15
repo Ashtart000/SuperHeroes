@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
-import { authRoutes, publicRoutes } from '../routes';
-import SuperHeroes from '../pages/SuperHeroes';
+import { Routes, Route } from 'react-router-dom';
+import { authRoutes, publicRoutes, adminRoutes } from '../routes';
 import { Context } from '..';
 
 const AppRouter = () => {
@@ -11,13 +10,15 @@ const AppRouter = () => {
 
     return (
         <Routes>
+            {user.isAdmin && adminRoutes.map(({path, element}) =>
+                <Route key={path} path={path} element={element}/>
+            )}
             {user.isAuth && authRoutes.map(({path, element}) =>
                 <Route key={path} path={path} element={element}/>
             )}
             {publicRoutes.map(({path, element}) =>
                 <Route key={path} path={path} element={element}/>
             )}
-            {/* <Route path='superheroes/*' element={<SuperHeroes />}/> */}
         </Routes>
     );
 }
