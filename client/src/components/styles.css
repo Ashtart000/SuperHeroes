@@ -55,6 +55,22 @@ button:not(:disabled):hover {
   background-color: teal;
 }
 
+.random-hero-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  gap: 20px;
+}
+
+.random-prediction {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #dadada;
+  padding: 20px;
+}
+
 .auth-wrapper {
   width: 500px;
   margin: 40px auto;

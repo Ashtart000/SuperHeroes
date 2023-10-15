@@ -113,7 +113,7 @@ const CreateHeroModal = (props) => {
                 setError(null);
             }
             // props.setIsModalOpen(false);
-            // await props.loadGroups(props.page);
+
         } catch (err) {
             setError(err);
         } finally {
@@ -144,7 +144,17 @@ const CreateHeroModal = (props) => {
                         <>
                         <Form className='add-hero-form'>
                             <div className='add-hero-main-info'>
-                        <Field placeholder='Nickname' name='nickname'/>
+                        <Field 
+                            placeholder='Nickname' 
+                            name='nickname'
+                            validate={(value) => {
+                                const trimmedValue = value.trim(); 
+                                if (!trimmedValue) {
+                                    return "Та ну! Нікнейм єдине обов'язкове поле. Заповніть його, будь-ласка.";
+                                }
+                                return undefined; 
+                        }}/>
+                        <ErrorMessage name='nickname' component='p' className='error-message' />
                         <Field placeholder='Real name' name='realName'/>
                         <Field placeholder='Description' name='description'/>
                         <Field placeholder='Catch phrase' name='catchPhrase'/>

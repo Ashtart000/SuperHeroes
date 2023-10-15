@@ -113,6 +113,7 @@ module.exports.getOneHeroRandom = async (req, res, next) => {
             include: [
                 {
                     model: Prediction,
+                    attributes: ['description'],
                     order: Sequelize.literal('RANDOM()'),
                     limit: 1
                 }
