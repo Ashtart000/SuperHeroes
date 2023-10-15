@@ -29,5 +29,8 @@ superheroesRouter.get('/:heroId', SuperheroesController.getOneHero);
 superheroesRouter.put('/avatar/:heroId', upload.single('superAvatar'), SuperheroesController.addHeroAvatar);
 superheroesRouter.put('/:heroId', SuperheroesController.updateHero);
 superheroesRouter.post('/favourites/:heroId/:userId', SuperheroesController.addToFavourite);
+superheroesRouter.delete('/favourites/:heroId/:userId', SuperheroesController.removeFromFavourite);
+superheroesRouter.post('/favourites/:heroId/:userId', SuperheroesController.addToFavourite);
+superheroesRouter.get('/favourites/:heroId/:userId', SuperheroesController.isFavouriteHero);
 
 module.exports = superheroesRouter;

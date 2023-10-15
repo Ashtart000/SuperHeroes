@@ -231,3 +231,24 @@ module.exports.addToFavourite = async (req, res, next) => {
     return res.send(addedToFavourite);
 }
 
+module.exports.removeFromFavourite = async (req, res, next) => {
+    const { params: {heroId, userId} } = req;
+    const hero = await Superhero.findByPk(heroId);
+
+    const result = await hero.removeUser(userId);
+    if(result > 0) {
+        return res.status(200).json({ message: 'Succesfull delete!' });
+    } else {
+        return res.status(404).json({ message: 'Such hero does not exist!' });
+    }  
+}
+
+module.exports.isFavouriteHero = async (req, res, next) => {
+    const { params: {heroId, userId} } = req;
+    const hero = await Superhero.findByPk(heroId);
+
+    const result = await hero.hasUser(parseInt(userId));
+    console.log(result)
+    return res.send(result);
+}
+

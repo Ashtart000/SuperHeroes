@@ -285,5 +285,10 @@ button:not(:disabled):hover {
   position: absolute;
   left: 80%;
   font-size: 70px;
+  cursor: pointer;
+  color: rgb(196, 194, 194);
+}
+
+.favourite-added {
   color: rgb(223, 39, 39);
 }

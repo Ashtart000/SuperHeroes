@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { addToFavourite } from '../api/heroApi';
+import { addToFavourite, isHeroFavourite, removeFromFavourite } from '../api/heroApi';
 
 Modal.setAppElement('#root');
 
@@ -26,9 +26,32 @@ const slickSettings = {
 const SuperHeroModal = (props) => {
     const {selectedHero} = props;
 
+    const [isFavourite, setIsFavourite] = useState(false);
+
     const handleAddToFavourite = async () => {
-        await addToFavourite(selectedHero.id)
+        await addToFavourite(selectedHero.id);
+        setIsFavourite(true);
     }
+
+    const handleRemoveFromFavourite = async () => {
+        await removeFromFavourite(selectedHero.id);
+        setIsFavourite(false);
+    }
+
+    const loadIsFavourite = async () => {
+        try {
+            if (selectedHero && selectedHero.id) {
+                const result = await isHeroFavourite(selectedHero.id);
+                setIsFavourite(result);
+            }
+        } catch (error) {
+            console.error('Помилка при завантаженні обраного:', error);
+        }
+    }
+    
+    useEffect(() => {
+        loadIsFavourite();
+    }, [selectedHero]);
     
     return (
         <Modal
@@ -39,7 +62,10 @@ const SuperHeroModal = (props) => {
                 {props.selectedHero &&(
                 <article className='card-wrapper'>
 
-                <span className='favourite' onClick={handleAddToFavourite}>&#9829;</span>
+                {!isFavourite ? 
+                <span className='favourite' title='Додати в обране' onClick={handleAddToFavourite}>&#9829;</span> 
+                : <span className='favourite favourite-added' title='Видалити з обраного' onClick={handleRemoveFromFavourite}>&#9829;</span> }   
+                
 
                 <h1>{selectedHero.nickname}</h1>
                 <img src={`http://localhost:5000/${selectedHero.imagePath}`} alt={selectedHero.nickname} className='hero-avatar'/>
